@@ -4,7 +4,6 @@ let wind = 0;
 class Leaf {
     constructor() {
         this.img = document.createElement("img");
-        this.img.style.overflow = "hidden";
         if(Math.random() < 0.2){
             this.img.src = "leaf1.png";
         }
