@@ -50,6 +50,24 @@ div {
     text-align:center;
 }
 
+#aboutDiv {
+    border-radius: 0px;
+    padding: 0px;
+    margin: 0px;
+    box-shadow: 2px 2px 4px #0000;
+    text-align:center;
+    display: flex;
+    align-items: center;
+}
+
+#aboutDiv div {
+    flex: 1;
+}
+
+#aboutDiv img {
+    max-height: 100px;
+}
+
 canvas {
     position: absolute;
     margin: 0;
@@ -57,6 +75,18 @@ canvas {
     top: 0;
     left: 0;
     z-index: -1;
+}
+
+a {
+    width: 100%;
+    font-size: 40px;
+    color: #A5A671;
+    text-decoration: none;
+    text-shadow: 0 0 2px black, 0 0 6px black, 0 0 30px black;
+}
+
+a:hover {
+    color: #fffe;
 }
 
 #left {
