@@ -1,5 +1,8 @@
 let leaves = [];
-let wind = 0;
+var c = document.getElementById("bgCanvas");
+var ctx = c.getContext("2d");
+c.width = window.innerWidth;
+c.height = window.innerHeight;
 
 class Leaf {
     constructor() {
@@ -13,35 +16,25 @@ class Leaf {
         if(Math.random() < 0.5){
             this.img.style.transform = "scaleX(-1)";
         }
-        this.img.style.position = 'absolute';
-        this.img.style.width = (Math.random()*20 + 30)+'px';
-        this.img.style.zIndex = '-999';
-        document.body.appendChild(this.img);
-        this.X = Math.random()*screen.width;
-        this.Y = -120;
-        this.a = 235;
         this.t = 0;
-        this.fallspeed = Math.random() * 0.6 + 0.1;
-        this.swing = Math.random() * 40 + 40;
-        this.arc = Math.random()*50;
-        this.dir = Math.floor(Math.random()*2)*2-1;
+        this.X = 0;
+        this.Y = 0;
+        this.xShift = Math.random()*screen.width;
+        this.yShift = -50;
+        this.xSwing = Math.random()*200 + 60;
+        this.ySwing = Math.random()*100 + 30;
+        this.speed = Math.random()*30 + 50;
     }
 }
 
 setInterval(update, 10);
 
 function update(){
-    wind += Math.random()*0.2-0.1;
-    if(wind > 2){
-        wind = 2;
-    }
-    if(wind < -2){
-        wind = -2;
-    }
     if(leaves.length < 40 && Math.random() < 0.01 || leaves.length === 0){
         leaves.push(new Leaf());
     }
     move();
+    render();
 }
 
 function move(){
@@ -51,15 +44,18 @@ function move(){
             leaves.splice(i,1);
             i--;
         }
-        if(leaves[i].X < -200 || leaves[i].X > screen.width + 200){
-            leaves[i].X = screen.width-leaves[i].X;
-        }
-        leaves[i].t += Math.random() * 3;
-        leaves[i].a = 235 + leaves[i].arc * Math.sin(leaves[i].t * 0.02);
-        leaves[i].X += leaves[i].dir*(wind * Math.random());
-        leaves[i].Y += leaves[i].fallspeed;
-        leaves[i].img.style.left = leaves[i].X + leaves[i].swing*Math.cos(leaves[i].a * 0.02);
-        leaves[i].img.style.top = leaves[i].Y - leaves[i].swing*Math.sin(leaves[i].a * 0.02);
-        leaves[i].img.style.transform = "rotate("+(-90+leaves[i].a*-1)+"deg)";
+        leaves[i].t++;
+        let t = leaves[i].t * 0.01;
+        leaves[i].X = leaves[i].xSwing * Math.cos(t) + leaves[i].xShift;
+        leaves[i].Y = leaves[i].ySwing * Math.sin(t) + leaves[i].speed * t + leaves[i].yShift;
     }
 }
+
+
+function render(){
+    ctx.clearRect(0, 0, c.width, c.height);
+    for(let i = 0; i < leaves.length; i++){
+        ctx.drawImage(leaves[i].img,leaves[i].X,leaves[i].Y,30,30);
+    }
+}
+
