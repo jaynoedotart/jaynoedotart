@@ -39,15 +39,15 @@ function update(){
 
 function move(){
     for(let i = 0; i < leaves.length; i++){
+        leaves[i].t++;
+        let t = leaves[i].t * 0.01;
+        leaves[i].X = leaves[i].xSwing * Math.cos(t) + leaves[i].xShift;
+        leaves[i].Y = leaves[i].ySwing * Math.sin(t) + leaves[i].speed * t + leaves[i].yShift;
         if(leaves[i].Y > screen.height + 400){
             leaves[i].img.remove();
             leaves.splice(i,1);
             i--;
         }
-        leaves[i].t++;
-        let t = leaves[i].t * 0.01;
-        leaves[i].X = leaves[i].xSwing * Math.cos(t) + leaves[i].xShift;
-        leaves[i].Y = leaves[i].ySwing * Math.sin(t) + leaves[i].speed * t + leaves[i].yShift;
     }
 }
 
